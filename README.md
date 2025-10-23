@@ -22,6 +22,10 @@ https://github.com/kawre/leetcode.nvim/assets/69250723/aee6584c-e099-4409-b114-1
 
 - 💾 caching for optimized performance
 
+- 🚪 customizable quit keymap
+
+- 🎣 submit hook for capturing submission results
+
 ## 📬 Requirements
 
 - [Neovim] >= 0.9.0
@@ -148,6 +152,7 @@ To see full configuration types see [template.lua](./lua/leetcode/config/templat
     keys = {
         toggle = { "q" }, ---@type string|string[]
         confirm = { "<CR>" }, ---@type string|string[]
+        quit = {"qa"},
 
         reset_testcases = "r", ---@type string
         use_testcase = "U", ---@type string
@@ -312,6 +317,9 @@ hooks = {
 
     ---@type fun()[]
     ["leave"] = {},
+
+    ---@type fun(question: lc.ui.Question, buffer: string, status_msg: string|nil, success: string|nil)[]
+    ["submit"] = {},
 },
 ```
 
