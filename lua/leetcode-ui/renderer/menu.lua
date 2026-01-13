@@ -33,7 +33,11 @@ function Menu:autocmds()
         group = group_id,
         buffer = self.bufnr,
         callback = function()
-            self:draw()
+            vim.schedule(function()
+                if vim.api.nvim_win_is_valid(self.winid) then
+                    self:draw()
+                end
+            end)
         end,
     })
 
@@ -146,9 +150,6 @@ function Menu:apply_options()
         spell = false,
         signcolumn = "no",
     })
-    vim.schedule(function()
-        ui_utils.win_set_winfixbuf(self.winid)
-    end)
 end
 
 function Menu:unmount()

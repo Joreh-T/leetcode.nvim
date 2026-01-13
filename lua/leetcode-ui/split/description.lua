@@ -24,7 +24,11 @@ function Description:autocmds()
         group = group_id,
         buffer = self.bufnr,
         callback = function()
-            self:draw()
+            vim.schedule(function()
+                if vim.api.nvim_win_is_valid(self.winid) then
+                    self:draw()
+                end
+            end)
         end,
     })
 end
@@ -58,12 +62,6 @@ function Description:mount()
         signcolumn = "no",
         linebreak = true,
     })
-    ui_utils.win_set_winfixbuf(self.winid)
-
-    if not img_ok and config.user.image_support then
-        log.error("image.nvim not found but `image_support` is enabled")
-    end
-
     self:draw()
     self:autocmds()
     return self
